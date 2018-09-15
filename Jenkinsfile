@@ -27,7 +27,7 @@ stages{
             parallel{
                 stage ('Deploy to Staging'){
                     steps {
-                        bat "pscp -i tomcat-test.pem C:/Program Files (x86)/Jenkins/workspace/FullyAutomated_aws/webapp/target/*.war ssh ec2-user@${params.tomcat_staging}:/var/lib/tomcat7/webapps" 
+                        bat "pscp -i D:/LocalData/z022140/Downloads/softwares/cmder/tomcat-test.pem C:/Program Files (x86)/Jenkins/workspace/FullyAutomated_aws/webapp/target/*.war ssh ec2-user@${params.tomcat_staging}:/var/lib/tomcat7/webapps" 
                     }
                 }
 
