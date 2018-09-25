@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     parameters {
-         string(name: 'tomcat_staging', defaultValue: '54.200.171.161', description: 'Staging Server')
-         string(name: 'tomcat_prod', defaultValue: '54.245.5.222', description: 'Production Server')
+         string(name: 'tomcat_staging', defaultValue: '35.167.159.177', description: 'Staging Server')
+         string(name: 'tomcat_prod', defaultValue: '34.212.45.8', description: 'Production Server')
     }
 
     triggers {
@@ -27,13 +27,13 @@ stages{
             parallel{
                 stage ('Deploy to Staging'){
                     steps {
-                        bat "pscp -i D:/LocalData/z022140/Downloads/softwares/cmder/tomcat-test.pem C:/Program Files (x86)/Jenkins/workspace/FullyAutomated_aws/webapp/target/*.war ssh ec2-user@${params.tomcat_staging}:/var/lib/tomcat7/webapps" 
+                        sh "scp -i /home/ubuntu/tomcat-ubuntu.pem /target/*.war ssh ubuntu@${params.tomcat_staging}:/var/lib/tomcat87/webapps" 
                     }
                 }
 
                 stage ("Deploy to Production"){
                     steps {
-                        bat "pscp -i tomcat-test.pem C:/Program Files (x86)/Jenkins/workspace/FullyAutomated_aws/webapp/target/*.war ssh ec2-user@${params.tomcat_prod}:/var/lib/tomcat7/webapps"
+                        sh "scp -i /home/ubuntu/tomcat-ubuntu.pem /target/*.war ssh ubuntu@${params.tomcat_prod}:/var/lib/tomcat8/webapps"
                     }
                 }
             }
