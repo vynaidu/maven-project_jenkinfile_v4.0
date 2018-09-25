@@ -27,13 +27,13 @@ stages{
             parallel{
                 stage ('Deploy to Staging'){
                     steps {
-                        sh "scp -i /home/ubuntu/tomcat-ubuntu.pem /var/lib/jenkins/workspace/first_maven_project/webapp/target/*.war ssh ubuntu@${params.tomcat_staging}:/var/lib/tomcat87/webapps" 
+                        sh "scp -i /home/ubuntu/tomcat-ubuntu.pem /var/lib/jenkins/workspace/first_maven_project/webapp/target/*.war ssh -i /home/ubuntu/tomcat-ubuntu.pem ubuntu@${params.tomcat_staging}:/var/lib/tomcat87/webapps" 
                     }
                 }
 
                 stage ("Deploy to Production"){
                     steps {
-                        sh "scp -i /home/ubuntu/tomcat-ubuntu.pem /var/lib/jenkins/workspace/first_maven_project/webapp/target/*.war ssh ubuntu@${params.tomcat_prod}:/var/lib/tomcat8/webapps"
+                        sh "scp -i /home/ubuntu/tomcat-ubuntu.pem /var/lib/jenkins/workspace/first_maven_project/webapp/target/*.war ssh -i /home/ubuntu/tomcat-ubuntu.pem ubuntu@${params.tomcat_prod}:/var/lib/tomcat8/webapps"
                     }
                 }
             }
