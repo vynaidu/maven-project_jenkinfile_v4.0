@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     parameters {
-         string(name: 'tomcat_staging', defaultValue: '35.167.159.177', description: 'Staging Server')
-         string(name: 'tomcat_prod', defaultValue: '34.212.45.8', description: 'Production Server')
+         string(name: 'tomcat_staging', defaultValue: '13.232.168.168', description: 'Staging Server')
+         string(name: 'tomcat_prod', defaultValue: '52.66.214.0', description: 'Production Server')
     }
 
     triggers {
@@ -27,13 +27,13 @@ stages{
             parallel{
                 stage ('Deploy to Staging'){
                     steps {
-                        sh "scp -i /home/ubuntu/tomcat-ubuntu.pem /var/lib/jenkins/workspace/first_maven_project/webapp/target/*.war ssh -i /home/ubuntu/tomcat-ubuntu.pem ubuntu@${params.tomcat_staging}:/var/lib/tomcat87/webapps" 
+                        sh "scp -i /home/ubuntu/tomcat-stage2.pem /var/lib/jenkins/workspace/FullyAutomated/webapp/target/*.war ssh -i /home/ubuntu/tomcat-ubuntu.pem ubuntu@${params.tomcat_staging}:/var/lib/tomcat87/webapps" 
                     }
                 }
 
                 stage ("Deploy to Production"){
                     steps {
-                        sh "scp -i /home/ubuntu/tomcat-ubuntu.pem /var/lib/jenkins/workspace/first_maven_project/webapp/target/*.war ssh -i /home/ubuntu/tomcat-ubuntu.pem ubuntu@${params.tomcat_prod}:/var/lib/tomcat8/webapps"
+                        sh "scp -i /home/ubuntu/tomcat-stage2.pem /var/lib/jenkins/workspace/FullyAutomated/webapp/target/*.war ssh -i /home/ubuntu/tomcat-ubuntu.pem ubuntu@${params.tomcat_prod}:/var/lib/tomcat8/webapps"
                     }
                 }
             }
