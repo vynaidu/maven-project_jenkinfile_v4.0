@@ -27,7 +27,7 @@ stages{
             parallel{
                 stage ('Deploy to Staging'){
                     steps {
-                        sh "scp -i /home/ubuntu/tomcat-stage2.pem **/target/*.war ubuntu@${params.tomcat_staging}:/var/lib/tomcat8/webapps" 
+                        sh "scp -i /home/ubuntu/tomcat-stage2.pem **/target/*.war ssh -i /home/ubuntu/tomcat-stage2.pem ubuntu@${params.tomcat_staging}:/var/lib/tomcat8/webapps" 
                     }
                 }
 
