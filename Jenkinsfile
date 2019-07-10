@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     parameters {
-         string(name: 'tomcat_staging', defaultValue: '13.232.168.168', description: 'Staging Server')
-         string(name: 'tomcat_prod', defaultValue: '52.66.214.0', description: 'Production Server')
+         string(name: 'tomcat_staging', defaultValue: '13.233.115.91', description: 'Staging Server')
+         string(name: 'tomcat_prod', defaultValue: '13.233.150.129', description: 'Production Server')
     }
 
     triggers {
@@ -13,7 +13,7 @@ pipeline {
 stages{
         stage('Build'){
             steps {
-                sh 'mvn clean package'
+                bat 'mvn clean package'
             }
             post {
                 success {
@@ -27,13 +27,15 @@ stages{
             parallel{
                 stage ('Deploy to Staging'){
                     steps {
-                        sh "scp -i /home/ubuntu/tomcat-stage2.ppk **/target/*.war ubuntu@${params.tomcat_staging}:/var/lib/tomcat8/webapps" 
+                        bat "cp -i C:/Users/z022140/Google Drive/Personal/ec2tutorial.pem **/target/*.war ec2-user@${params.tomcat_staging}:/etc/tomcat8/apache-tomcat-8.5.42
+/webapps" 
                     }
                 }
 
                 stage ("Deploy to Production"){
                     steps {
-                        sh "scp -i /home/ubuntu/tomcat-prod.ppk **/target/*.war ubuntu@${params.tomcat_prod}:/var/lib/tomcat8/webapps"
+                        bat "cp -i C:/Users/z022140/Google Drive/Personal/ec2tutorial.pem **/target/*.war ubuntu@${params.tomcat_prod}:/etc/tomcat8/apache-tomcat-8.5.42
+/webapps"
                     }
                 }
             }
