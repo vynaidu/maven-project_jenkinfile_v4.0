@@ -4,6 +4,9 @@ pipeline {
     parameters {
          string(name: 'tomcat_staging', defaultValue: '13.233.115.91', description: 'Staging Server')
          string(name: 'tomcat_prod', defaultValue: '13.233.150.129', description: 'Production Server')
+		 string(name: 'ppk_path', defaultValue: 'C:/Users/z022140/Google Drive/Personal/ec2tutorial_private.ppk', description: 'full path to ppk file')
+         string(name: 'war_path', defaultValue:"CC:/Program Files (x86)/Jenkins/workspace/FullyAutomated/webapp/target/*.war", description: 'full path to war file')
+         string(name: 'target_path', defaultValue:'/etc/tomcat8/apache-tomcat-8.5.42/webapps', description: 'full path in the target server')
     }
 
     triggers {
@@ -27,13 +30,13 @@ stages{
             parallel{
                 stage ('Deploy to Staging'){
                     steps {
-                        bat "PATH=/sbin:/usr/sbin:/usr/bin:/usr/local/bin pscp -scp -i C:/Users/z022140/Google Drive/Personal/ec2tutorial.pem C:/Program Files (x86)/Jenkins/workspace/FullyAutomated/webapp/target/webapp.war ec2-user@${params.tomcat_staging}:/etc/tomcat8/apache-tomcat-8.5.42/webapps" 
+						bat "echo y | pscp -i ${ppk_path} ${war_path} ec2-user@${params.tomcat_staging}:${target_path}"
                     }
                 }
 
                 stage ("Deploy to Production"){
                     steps {
-                        bat "PATH=/sbin:/usr/sbin:/usr/bin:/usr/local/bin pscp -scp -i C:/Users/z022140/Google Drive/Personal/ec2tutorial.pem C:/Program Files (x86)/Jenkins/workspace/FullyAutomated/webapp/target/webapp.war ec2-user@${params.tomcat_prod}:/etc/tomcat8/apache-tomcat-8.5.42/webapps"
+                        bat "echo y | pscp -i ${ppk_path} ${war_path} ec2-user@${params.tomcat_prod}:${target_path}"
                     }
                 }
             }
