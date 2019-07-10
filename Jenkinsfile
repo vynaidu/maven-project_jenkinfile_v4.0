@@ -27,15 +27,13 @@ stages{
             parallel{
                 stage ('Deploy to Staging'){
                     steps {
-                        bat "cp -i C:/Users/z022140/Google Drive/Personal/ec2tutorial.pem **/target/*.war ec2-user@${params.tomcat_staging}:/etc/tomcat8/apache-tomcat-8.5.42
-/webapps" 
+                        bat "cp -i C:/Users/z022140/Google Drive/Personal/ec2tutorial.pem **/target/*.war ec2-user@${params.tomcat_staging}:/etc/tomcat8/apache-tomcat-8.5.42/webapps" 
                     }
                 }
 
                 stage ("Deploy to Production"){
                     steps {
-                        bat "cp -i C:/Users/z022140/Google Drive/Personal/ec2tutorial.pem **/target/*.war ubuntu@${params.tomcat_prod}:/etc/tomcat8/apache-tomcat-8.5.42
-/webapps"
+                        bat "cp -i C:/Users/z022140/Google Drive/Personal/ec2tutorial.pem **/target/*.war ubuntu@${params.tomcat_prod}:/etc/tomcat8/apache-tomcat-8.5.42/webapps"
                     }
                 }
             }
